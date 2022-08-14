@@ -331,18 +331,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // end -- funcion palabraSecreta
   //
 
-  const theGame = (vida, usoCanvas, newWords) => {
+  const theGame = (vida, usoCanvas) => {
     console.log('the game');
 
-    if (newWords !== undefined) {
-      newWords.forEach(item => {
-        listOfWords.push(item)
-      })
-    }
-    console.log(listOfWords)
+
+    // Determinado por la cantidad de partes del muñeco ahorcado
 
     let palabraJuego = palabraSecreta();
     console.log(palabraJuego)
+    let f = JSON.parse(window.sessionStorage.getItem('noModificar'));
+    if (f !== null) {
+      palabraJuego = false;
+    }
 
 
     let mensajeWinLose = document.getElementById('winORlose');
@@ -377,11 +377,22 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log(palabraJuego.quitadas, evento.key.toUpperCase())
       let teclaPresionada = evento.key.toUpperCase();
 
-      let xIndex = palabraJuego.quitadas.findIndex(item => item[0] === String(teclaPresionada));
-
+      let xIndex;
+      if (typeof(palabraJuego) === 'object') {
+        xIndex = palabraJuego.quitadas.findIndex(item => item[0] === String(teclaPresionada));
+      } else if (typeof(palabraJuego) === 'boolean') {
+        xIndex = -1
+      }
 
       // console.log(xIndex, teclaPresionada)
       // console.log('--->', palabraJuego.quitadas)
+
+      let f = JSON.parse(window.sessionStorage.getItem('noModificar'));
+      if (f !== null) {
+        console.log('ññññ', f)
+        xIndex = -1;
+        palabraJuego = '';
+      }
 
       if (xIndex > -1) {
         console.log(xIndex, palabraJuego.quitadas[xIndex], teclaPresionada);
@@ -486,10 +497,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const manejoNuevaPalabra = () => {
 
-    // let status = document.getElementById('displayStatusGame');
-    // status.innerText = '';
-    // let erroneas = document.getElementById('incorrectas');
-    // erroneas.innerHTML = '';
+    window.sessionStorage.setItem('noModificar', true);
+
+    let status = document.getElementById('displayStatusGame');
+    status.innerText = '';
+    let erroneas = document.getElementById('incorrectas');
+    erroneas.innerHTML = '';
 
 
     screenInicio.style.display = 'none';
@@ -512,48 +525,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', (evento) => {
       evento.preventDefault();
-
-      let palabrasNuevas = [];
-
       if (texto.value.trim() !== '') {
-        // listOfWords.push(texto.value.toUpperCase())
-
-        palabrasNuevas.push(texto.value.toUpperCase())
-
+        listOfWords.push(texto.value.toUpperCase())
         texto.value = '';
+        console.log('new list words-->', listOfWords);
 
-        // console.log('new list words-->', listOfWords);
-        console.log('words-->', palabrasNuevas);
+        screenWords.style.display = 'none';
+        screenGame.style.display = 'flex';
 
-        // screenWords.style.display = 'none';
-        // screenGame.style.display = 'flex';
+        let erroneas = document.getElementById('incorrectas');
+        erroneas.innerHTML = '';
 
-        // let erroneas = document.getElementById('incorrectas');
-        // erroneas.innerHTML = '';
+        document.removeEventListener('keydown', theGame);
 
-        // document.removeEventListener('keydown', theGame);
-        //
-        // let divCanvas = document.getElementById('tableroCanvas');
-        // divCanvas.innerHTML = '';
-        //
-        // let canvas = document.createElement('canvas');
-        // canvas.setAttribute('id', 'canvas');
-        // canvas.style.cssText = `
-        //   width: 100%;
-        //   height: 100%;
-        // `
-        // divCanvas.appendChild(canvas);
-        //
-        // let inicioVida = 10;
-        // theGame(inicioVida, canvas);
+        let divCanvas = document.getElementById('tableroCanvas');
+        divCanvas.innerHTML = '';
+
+        let canvas = document.createElement('canvas');
+        canvas.setAttribute('id', 'canvas');
+        canvas.style.cssText = `
+          width: 100%;
+          height: 100%;
+        `
+        divCanvas.appendChild(canvas);
 
 
-        window.sessionStorage.setItem('palabras', JSON.stringify(palabrasNuevas));
+        window.sessionStorage.removeItem('noModificar');
 
-        window.sessionStorage.setItem('reload', true)
-
-        window.location.reload();
-
+        let inicioVida = 10;
+        theGame(inicioVida, canvas);
       } else {
         texto.value = '';
       }
@@ -587,14 +587,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let canvAs = document.getElementById('canvas');
 
     let inicioVida = 10;
-    let words  = JSON.parse(window.sessionStorage.getItem('palabras'));
-    if (words !== null) {
-      theGame(inicioVida, canvAs, words);
-      window.sessionStorage.removeItem('palabras')
-    }
     theGame(inicioVida, canvAs);
-
-
   };
   //    ////    //  //    ////    //  //    ////    //
   //    ////    //  //    ////    //  //    ////    //
