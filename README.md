@@ -15,6 +15,8 @@ Todo esto mientras comentas y ayudas en proyectos de otros colegas del programa 
 ¡Manos a la obra!
 
 
-1. Sprint 01: Construye un encriptador de texto con Javascript
-2. Sprint 02: Crea tu propio juego del ahorcado con Javascript
-3.
+1. [Sprint 01: Construye un encriptador de texto con Javascript](https://github.com/kurotom/encriptador_challenge1)
+2. [Sprint 02: Crea tu propio juego del ahorcado con Javascript](https://github.com/kurotom/challenge2_juego_JS)
+3. [Sprint 03: Ecommerce - FrontEnd](https://github.com/kurotom/proyecto3_ecomerce-alura)
+
+
