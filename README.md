@@ -19,5 +19,5 @@ Todo esto mientras comentas y ayudas en proyectos de otros colegas del programa 
 2. [Sprint 02: Crea tu propio juego del ahorcado con Javascript](https://github.com/kurotom/challenge2_juego_JS)
 3. [Sprint 03: Ecommerce - FrontEnd](https://github.com/kurotom/proyecto3_ecomerce-alura)
 4. [Sprint 04: Java Conversor monedas/unidades](https://github.com/kurotom/ConversoresGUI_Java)
-5. [Sprint 05: Java Backend: Administración de reservas hotelera](https://github.com/kurotom/challenge-one-alura-hotel-latam)
+5. [Sprint 05: Java Backend: Administración de reservas hotelera](https://github.com/kurotom/challenge6-JavaBackend-Alura)
 
